@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Cryptocurrency</title>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+       <div class="container">
+        <nav>
+            <img src="images/logo.png" alt="Logo" class="logo"/>
+            <ul class="nav-links">
+                <li><a href="#home">Market</a></li>
+                <li><a href="#about">Features</a></li>
+                <li><a href="#services">White Papers</a></li>
+                <li><a href="#contact">About Us</a></li>
+            </ul>
+            <a href="#" class="btn">EN</a>
+        </nav>
+
+        <div class="content">
+            <h1>BUY & </br>SELL <span>Crypto</span></h1>
+            <p>World's Biggest Cryptocurrency exchange available on the web </br>as well as mobile phone.</p>
+            <a href="#" class="btn">EXPLORE MORE</a>
+        </div>
+
+        <div class="coin-list">
+            <div class="coin">
+                <img src="images/bitcoin.png" alt=""/>
+                <div>
+                    <h3>$00</h3>
+                    <p>Bitcoin</p>
+                </div>
+            </div>
+            <div class="coin">
+                <img src="images/ethereum.png" alt=""/>
+                <div>
+                    <h3>$00</h3>
+                    <p>Ethereum</p>
+                </div>
+            </div>
+            <div class="coin">
+                <img src="images/dogecoin.png" alt=""/>
+                <div>
+                    <h3>$00</h3>
+                    <p>Degecoin</p>
+                </div>
+            </div>
+        </div>
+
+       </div>
+
+    <script>
+        const apiUrl = "https://api.coingecko.com/api/v3/simple/price";
+        const headers = { "x-cg-demo-api-key": "CG-sr694NNoZC9UwRvjPMJ5zwRw" }; // 🔹 Replace this with your real key
+
+        async function getCryptoPrices() {
+        try {
+            const params = new URLSearchParams({
+            ids: "bitcoin,ethereum,dogecoin",
+            vs_currencies: "usd"
+            });
+
+            const response = await fetch(`${apiUrl}?${params.toString()}`, { headers });
+            const data = await response.json();
+
+            const coins = document.querySelectorAll(".coin h3");
+
+            coins[0].textContent = `$${data.bitcoin.usd.toLocaleString()}`;
+            coins[1].textContent = `$${data.ethereum.usd.toLocaleString()}`;
+            coins[2].textContent = `$${data.dogecoin.usd.toLocaleString()}`;
+        } catch (error) {
+            console.error("Error fetching prices:", error);
+        }
+        }
+
+
+        getCryptoPrices();
+        setInterval(getCryptoPrices, 30000);
+    </script>
+
+    </body>
+</html>
